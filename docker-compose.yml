@@ -1,0 +1,247 @@
+# All-in-One MCP Server Docker Compose, from https://github.com/modelcontextprotocol/servers primarily
+# Delete any MCP components you don't want, make adjustments, or add ones with the example below.
+# Any other useful self-hostable MCP servers can be added if they have a Dockerfile, or you can try to add in more JS, python, etc
+# GitHub MCP Servers require Dockerfiles and no "uv.lock" usage currently, plus necessary environment variables for deploy
+
+version: '3.8'
+services:
+  # Replicate this section by Dockerfile info to add more servers to docker-compose stack
+  mcp-server-everything: 
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/everything/Dockerfile
+    image: mcp-server:latest
+    container_name: mcp-everything-server
+    ports:
+      - "0.0.0.0:8081:8081"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - mcp-network
+  
+  mcp-memory-server:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/memory/Dockerfile
+    image: mcp-memory-server:latest
+    container_name: mcp-memory-server
+    ports:
+      - "0.0.0.0:8082:8082"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  mcp-puppeteer-server:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/puppeteer/Dockerfile
+    image: mcp-puppeteer-server:latest
+    container_name: mcp-puppeteer-server
+    ports:
+      - "0.0.0.0:8083:8083"
+    environment:
+      - NODE_ENV=production
+      - DEBIAN_FRONTEND=noninteractive
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+    privileged: true  # If need full system access
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  mcp-sequential-thinking-server:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/sequentialthinking/Dockerfile
+    image: mcp-sequential-thinking-server:latest
+    container_name: mcp-sequential-thinking-server
+    ports:
+      - "0.0.0.0:8084:8084"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  mcp-searxng-server:
+    build:
+      context: https://github.com/ihor-sokoliuk/mcp-searxng.git#main
+      dockerfile: Dockerfile
+    image: mcp-searxng-server:latest
+    container_name: mcp-searxng-server
+    ports:
+      - "0.0.0.0:8085:8085"
+    environment:
+      - NODE_ENV=production
+      - SEARXING_URL={http://localhost:8080}
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  mcp-github-server:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/github/Dockerfile
+    image: mcp-github-server:latest
+    container_name: mcp-github-server
+    ports:
+      - "0.0.0.0:8086:8086"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  mcp-server-slack:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/slack/Dockerfile
+    image: mcp-server-slack:latest
+    container_name: mcp-server-slack
+    ports:
+      - "0.0.0.0:8087:8087"
+    environment:
+      - NODE_ENV=production
+      - SLACK_BOT_TOKEN={SlackTokenHere}
+      - SLACK_TEAM_ID={SlackTeamIDHere}
+    networks:
+      - mcp-network
+
+  mcp-server-gdrive:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/gdrive/Dockerfile
+    image: mcp-server-gdrive:latest
+    container_name: mcp-server-gdrive
+    ports:
+      - "0.0.0.0:8088:8088"
+    environment:
+      - NODE_ENV=production
+    command: node ./dist auth
+    networks:
+      - mcp-network
+
+  mcp-server-gitlab:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/gitlab/Dockerfile
+    image: mcp-server-gitlab:latest
+    container_name: mcp-server-gitlab
+    ports:
+      - "0.0.0.0:8089:8089"
+    environment:
+      - NODE_ENV=production
+      - GITLAB_PERSONAL_ACCESS_TOKEN={GitlabTokenHere}
+    networks:
+      - mcp-network
+
+  mcp-server-everart:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/everart/Dockerfile
+    image: mcp-server-everart:latest
+    container_name: mcp-server-everart
+    ports:
+      - "0.0.0.0:8090:8090"
+    environment:
+      - NODE_ENV=production
+      - EVERART_API_KEY={EverartAPIKeyHere}
+    networks:
+      - mcp-network
+
+  mcp-server-postgres:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/postgres/Dockerfile
+    image: mcp-server-postgres:latest
+    container_name: mcp-server-postgres
+    ports:
+      - "0.0.0.0:8091:8091"
+    environment:
+      - NODE_ENV=production
+    # Uncomment to pass database URL and password
+    #command: postgresql://user:password@host:port/db-name #
+    networks:
+      - mcp-network
+
+  # WARNING: Will allow for local filesystem changes if volume bound
+  mcp-server-filesystem:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/filesystem/Dockerfile
+    image: mcp-server-filesystem:latest
+    container_name: mcp-server-filesystem
+    ports:
+      - "0.0.0.0:8092:8092"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - type: bind
+        source: /home/{user}
+        target: /home/{user}
+        read_only: false  # Set to true if you want read-only access
+    networks:
+      - mcp-network
+
+  mcp-server-gmaps:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/google-maps/Dockerfile
+    image: mcp-server-gmaps:latest
+    container_name: mcp-server-gmaps
+    ports:
+      - "0.0.0.0:8093:8093"
+    environment:
+      - NODE_ENV=production
+      - GOOGLE_MAPS_API_KEY={GoogleMapsAPIKeyHere}
+    networks:
+      - mcp-network
+
+  mcp-server-brave-search:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/brave-search/Dockerfile
+    image: mcp-server-brave-search:latest
+    container_name: mcp-server-brave-search
+    ports:
+      - "0.0.0.0:8094:8094"
+    environment:
+      - NODE_ENV=production
+      - BRAVE_API_KEY={BraveAPIKeyHere}
+    # Add these for debugging
+    command: ["sh", "-c", "pwd && ls -la && node dist/index.js || (echo 'Failed to start' && exit 1)"]
+    networks:
+      - mcp-network
+
+  mcp-server-aws-kb-retrieval:
+    build:
+      context: https://github.com/modelcontextprotocol/servers.git#main
+      dockerfile: src/aws-kb-retrieval-server/Dockerfile
+    image: mcp-server-aws-kb-retrieval:latest
+    container_name: mcp-server-aws-kb-retrieval
+    ports:
+      - "0.0.0.0:8095:8095"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - mcp-network
+
+  mcp-server-docker:
+    build:
+      context: https://github.com/ckreiling/.git#main
+      dockerfile: mcp-server-docker/Dockerfile
+    image: mcp-server-slack:latest
+    container_name: mcp-server-docker
+    ports:
+      - "0.0.0.0:8096:8096"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
