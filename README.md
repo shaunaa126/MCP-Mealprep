@@ -60,6 +60,11 @@ This docker-compose collection includes servers for:
 - Some servers require specific configuration or API tokens
 - Refer to the individual server documentation in the [MCP Servers repository](https://github.com/modelcontextprotocol/servers)
 
+## Running
+
+### Warnings
+This is a first step to running these MCP services in a containerized and easier-to-deploy process. Because of that, your Docker system might look like they're not running or running well. I've tested most of these personally at least running on a VPS stack, so they should be beta level functional. If you get "[name] MCP Server is running on stdio" messages in the log, you're probably all good. But test it out and see how things work. And if you notice some adjustments need to be made, make a pull request.
+
 ## Customization
 
 ### Adding/Removing Servers
