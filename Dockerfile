@@ -10,12 +10,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip and install initial tools early
-RUN pip3 install --upgrade pip \
-    && pip3 install uv \
-    && npm install -g npx supergateway superargs \
-    && uv tool install mcp-proxy
-
 # Rest of node install taken from nodejs/docker-node:Dockerfile-debian.template
 # Create a node group and user
 RUN groupadd --gid 1000 node \
@@ -34,6 +28,12 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
     && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
+
+# Upgrade pip and install initial tools
+RUN pip3 install --upgrade pip \
+    && pip3 install uv \
+    && npm install -g npx supergateway superargs \
+    && uv tool install mcp-proxy
 
 # Set up virtual environment for mcpo
 ENV VIRTUAL_ENV=/app/.venv
