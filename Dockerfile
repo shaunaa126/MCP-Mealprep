@@ -35,8 +35,6 @@ RUN set -x \
     && pip3 install uv \
     && echo "Pip and uv installation completed" \
     && echo "NPM Global packages installation begins..." \
-    && npm install -g npx supergateway superargs \
-    && echo "NPM Global packages installed successfully" \
 
 # Drop into bash shell
 CMD ["/bin/bash"]
