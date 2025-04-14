@@ -34,8 +34,8 @@ RUN pip3 install --upgrade pip \
     && pip3 install uv \
     && echo "Installing npm global packages..." \
     && npm install -g npx supergateway superargs \
-    && echo "Trying to install mcp-proxy..." \
-    && uv tool install mcp-proxy || (echo "Failed to install mcp-proxy" && exit 1)
+    && echo "Attempting mcp-proxy installation..." \
+    && (uv tool install mcp-proxy || pip3 install mcp-proxy || true)
 
 # Set up virtual environment for mcpo
 ENV VIRTUAL_ENV=/app/.venv
