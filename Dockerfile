@@ -1,6 +1,21 @@
 # Start with buildpack-deps (Debian-based) from 
 FROM buildpack-deps:bullseye
 
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    ca-certificates \
+    python3-pip \
+    python3-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip and install initial tools early
+RUN pip3 install --upgrade pip \
+    && pip3 install uv \
+    && npm install -g npx supergateway superargs \
+    && uv tool install mcp-proxy
+
 # Rest of node install taken from nodejs/docker-node:Dockerfile-debian.template
 # Create a node group and user
 RUN groupadd --gid 1000 node \
@@ -20,30 +35,21 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-# Update pip and install uv
-RUN apt-get update && apt-get install -y python3-pip \
-    && pip install --upgrade pip \
-    && pip install uv
+# Set up virtual environment for mcpo
+ENV VIRTUAL_ENV=/app/.venv
+WORKDIR /app
 
-# Install mcpo using pip
-RUN pip install mcpo
+# Create virtual environment for mcpo
+RUN python3 -m venv "$VIRTUAL_ENV"
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Install mcp-proxy using uv tool
-RUN uv tool install mcp-proxy
+# Install mcpo and dependencies
+RUN pip3 install . \
+    && rm -rf ~/.cache
 
-# Install supergateway
-RUN npm install -g supergateway
-
-# Optional: Install Superargs (planned improvements)
-RUN npm install -g superargs
-
-# Set the working directory
-WORKDIR /workspace
+# Verify installations
+RUN which mcpo \
+    && mcpo --version
 
 # Drop into bash shell
-CMD ["/bin/bash"]
-# Set the working directory
-WORKDIR /workspace
-
-# Drop into bash shell to allow calling any of these tools in docker-compose command
 CMD ["/bin/bash"]
