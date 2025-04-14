@@ -29,13 +29,16 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-# Upgrade pip and install initial tools with verbose output and error checking
-RUN pip3 install --upgrade pip \
+# Upgrade pip and install initial tools with extensive debugging
+RUN set -x \
+    && pip3 install --upgrade pip \
     && pip3 install uv \
-    && echo "Installing npm global packages..." \
+    && echo "Pip and uv installation completed" \
+    && echo "NPM Global packages installation begins..." \
     && npm install -g npx supergateway superargs \
-    && echo "Attempting mcp-proxy installation..." \
-    && (uv tool install mcp-proxy || pip3 install mcp-proxy || true)
+    && echo "NPM Global packages installed successfully" \
+    && echo "Attempting various mcp-proxy installation methods..." \
+    && (uv tool install mcp-proxy || pip3 install mcp-proxy || pip3 install git+https://github.com/open-webui/mcpo.git || echo "All mcp-proxy installation methods failed")
 
 # Set up virtual environment for mcpo
 ENV VIRTUAL_ENV=/app/.venv
