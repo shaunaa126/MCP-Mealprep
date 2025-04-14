@@ -29,11 +29,13 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-# Upgrade pip and install initial tools
+# Upgrade pip and install initial tools with verbose output and error checking
 RUN pip3 install --upgrade pip \
     && pip3 install uv \
+    && echo "Installing npm global packages..." \
     && npm install -g npx supergateway superargs \
-    && uv tool install mcp-proxy
+    && echo "Trying to install mcp-proxy..." \
+    && uv tool install mcp-proxy || (echo "Failed to install mcp-proxy" && exit 1)
 
 # Set up virtual environment for mcpo
 ENV VIRTUAL_ENV=/app/.venv
