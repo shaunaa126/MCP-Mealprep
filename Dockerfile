@@ -1,16 +1,23 @@
 # Start with the standard Python container
 FROM python:3.11-slim
 
+# Ensure apt is updated and install essential build tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js and npm using nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
+    && export NVM_DIR="$HOME/.nvm" \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
+    && nvm install 20 \
+    && nvm use 20 \
+    && npm install -g npx
+    
 # Update pip and install uv
 RUN pip install --upgrade pip && \
     pip install uv
-
-# Install Node.js and npx
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g npx
 
 # Install mcpo using pip
 RUN pip install mcpo
@@ -23,6 +30,9 @@ RUN npm install -g supergateway
 
 # Optional: Install Superargs (planned improvements)
 RUN npm install -g superargs
+
+# Ensure npm and node are in the PATH
+ENV PATH="/root/.nvm/versions/node/v20.0.0/bin:${PATH}"
 
 # Set the working directory
 WORKDIR /workspace
