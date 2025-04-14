@@ -37,8 +37,6 @@ RUN set -x \
     && echo "NPM Global packages installation begins..." \
     && npm install -g npx supergateway superargs \
     && echo "NPM Global packages installed successfully" \
-    && echo "Attempting various mcp-proxy installation methods..." \
-    && (uv tool install mcp-proxy || pip3 install mcp-proxy || pip3 install git+https://github.com/open-webui/mcpo.git || echo "All mcp-proxy installation methods failed")
 
 # Set up virtual environment for mcpo
 ENV VIRTUAL_ENV=/app/.venv
