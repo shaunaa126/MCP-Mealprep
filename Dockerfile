@@ -38,9 +38,5 @@ RUN set -x \
     && npm install -g npx supergateway superargs \
     && echo "NPM Global packages installed successfully" \
 
-# Verify installations
-RUN which mcpo \
-    && mcpo --version
-
 # Drop into bash shell
 CMD ["/bin/bash"]
