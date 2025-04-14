@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
+# Install uv CLI
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
 # Rest of node install taken from nodejs/docker-node:Dockerfile-debian.template
 # Create a node group and user
 RUN groupadd --gid 1000 node \
