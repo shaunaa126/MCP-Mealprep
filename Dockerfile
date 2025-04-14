@@ -37,8 +37,6 @@ RUN set -x \
     && echo "NPM Global packages installation begins..." \
     && npm install -g npx supergateway superargs \
     && echo "NPM Global packages installed successfully" \
-    && pip install mcpo \
-    && echo "mcpo installed via pip successfully"
 
 # Verify installations
 RUN which mcpo \
