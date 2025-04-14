@@ -37,18 +37,8 @@ RUN set -x \
     && echo "NPM Global packages installation begins..." \
     && npm install -g npx supergateway superargs \
     && echo "NPM Global packages installed successfully" \
-
-# Set up virtual environment for mcpo
-ENV VIRTUAL_ENV=/app/.venv
-WORKDIR /app
-
-# Create virtual environment for mcpo
-RUN python3 -m venv "$VIRTUAL_ENV"
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install mcpo and dependencies
-RUN pip3 install . \
-    && rm -rf ~/.cache
+    && pip3 install mcpo
+    && echo "mcpo installed via pip successfully" \
 
 # Verify installations
 RUN which mcpo \
