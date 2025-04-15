@@ -1,3 +1,4 @@
+## DEPRECIATED - This will still function, and is a backup option, but see the new process that uses this repo's GHCR container to build npx, uv, and pip
 # All-in-One MCP Server Docker Compose, from https://github.com/modelcontextprotocol/servers primarily
 # Delete any MCP components you don't want, make adjustments, or add ones with the example below.
 # Any other useful self-hostable MCP servers can be added if they have a Dockerfile, or you can try to add in more JS, python, etc
