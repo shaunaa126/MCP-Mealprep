@@ -4,6 +4,9 @@ FROM buildpack-deps:bullseye
 # Create Workdirectory
 WORKDIR /app
 
+# Copy the current directory contents into the container at /app
+COPY . /app/
+
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -43,7 +46,7 @@ RUN set -x \
     && echo "NPM Global packages installation begins..." \
     
 # Copy startup.sh into the container
-COPY startup.sh /app/startup.sh
+# COPY startup.sh /app/startup.sh
 
 # Debugging step - list contents of /app to verify file exists
 RUN ls -l /app
@@ -52,4 +55,4 @@ RUN ls -l /app
 RUN chmod +x /app/startup.sh
 
 # Drop into bash shell
-CMD ["/bin/bash"]
+CMD ["/app/startup.sh"]
