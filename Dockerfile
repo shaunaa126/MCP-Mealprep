@@ -40,7 +40,7 @@ RUN set -x \
     && echo "NPM Global packages installation begins..." \
     
 # Copy startup.sh into the container
-COPY /startup.sh /app/startup.sh
+COPY startup.sh /app/startup.sh
 
 # Debugging step - list contents of /app to verify file exists
 RUN ls -l /app
