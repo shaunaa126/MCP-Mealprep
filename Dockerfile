@@ -39,5 +39,11 @@ RUN set -x \
     && echo "Pip and uv installation completed" \
     && echo "NPM Global packages installation begins..." \
 
+# Copy startup.sh into the container (adjust path if needed)
+COPY ./startup.sh /app/startup.sh  # Assuming startup.sh is in the same directory as Dockerfile
+
+# Make the script executable
+RUN chmod +x /app/startup.sh
+
 # Drop into bash shell
 CMD ["/bin/bash"]
