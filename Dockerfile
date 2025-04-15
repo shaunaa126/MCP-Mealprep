@@ -1,6 +1,9 @@
 # Start with buildpack-deps (Debian-based) from 
 FROM buildpack-deps:bullseye
 
+# Create Workdirectory
+WORKDIR /app
+
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
