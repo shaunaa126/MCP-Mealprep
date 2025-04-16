@@ -75,7 +75,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-calculator
     ports:
-      - "8086:8086"
+      - "8085:8085"
     networks:
       - mcp_network
     environment:
@@ -90,7 +90,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-memory
     ports:
-      - "8088:8088"
+      - "8086:8086"
     networks:
       - mcp_network
     environment:
@@ -103,7 +103,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-puppeteer
     ports:
-      - "8089:8089"
+      - "8087:8087"
     networks:
       - mcp_network
     environment:
@@ -116,7 +116,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-searxng
     ports:
-      - "8090:8090"
+      - "8088:8088"
     networks:
       - mcp_network
     environment:
@@ -130,7 +130,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-slack
     ports:
-      - "8092:8092"
+      - "8089:8089"
     networks:
       - mcp_network
     environment:
@@ -145,7 +145,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-everart
     ports:
-      - "8095:8095"
+      - "8090:8090"
     networks:
       - mcp_network
     environment:
@@ -159,7 +159,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-gmaps
     ports:
-      - "8098:8098"
+      - "8091:8091"
     networks:
       - mcp_network
     environment:
@@ -173,7 +173,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-brave-search
     ports:
-      - "8099:8099"
+      - "8092:8092"
     networks:
       - mcp_network
     environment:
@@ -187,7 +187,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-aws-kb-retrieval
     ports:
-      - "8100:8100"
+      - "8093:8093"
     networks:
       - mcp_network
     environment:
@@ -200,7 +200,7 @@ services:
     image: ghcr.io/joshuarl/mcp-mealprep:main
     container_name: mcp-mealprep-docker
     ports:
-      - "8101:8101"
+      - "8094:8094"
     networks:
       - mcp_network
     environment:
