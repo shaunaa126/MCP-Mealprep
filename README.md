@@ -12,8 +12,11 @@ If you only want to run locally/interally, do not add "
 
 The GHCR container is based on debian, and should work with uv, npx, and pip installs. You should also be able to install docker mcp servers the old method, if needed. See "Depreciated Docker Process" below for more information.
 
-# mcpo Installation
-If you want to install 
+### mcpo Installation
+If you want to install the optional mcpo addition, add "USE_MCPO=true" to environment variables. This will instruct the startup.sh script to gather the MCP server command and environment variables and pass them to the mcpo command when ran. Please be aware this will be a duplicate server running at the same time and not connected with the original one. But it will allow for an OpenAPI-compatible endpoint that integrates with OpenWebUI and you can find more info about each server at /docs. This is not necessary, but if you want it, you can enable per server.
+
+### startup.sh README
+If you'd like more information about what exactly this bash script does once invoked in your container, please see "Startup README.md" for a comprehensive discussion of what is happening line by line. Vet it to make sure you're comfortable with running it, since it'll run in each MCP server container.
 
 ## Client Connection
 Once your server stack is running, you can connect your MCP client to your IP or domain and port. Or you can use mcpo commands again to connect if there's not an easy way to 
