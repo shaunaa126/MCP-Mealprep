@@ -18,6 +18,14 @@ If you want to install the optional mcpo addition, add "USE_MCPO=true" to enviro
 ### startup.sh README
 If you'd like more information about what exactly this bash script does once invoked in your container, please see "Startup README.md" for a comprehensive discussion of what is happening line by line. Vet it to make sure you're comfortable with running it, since it'll run in each MCP server container.
 
+### Security scanning
+## Scanning security with mcp-shield
+The "startup.sh" script now runs 
+```
+"npx mcp-shield >> "mcp-shield.log" 2>&1
+```
+to run that mcp security scanner, [mcp-shield](https://github.com/riseandignite/mcp-shield) and appends to the logfile. See their documentation for more info. You can also run that command in the container at any time to see if there's an issue, for instance after an update.
+
 ## Client Connection
 Once your server stack is running, you can connect your MCP client to your IP or domain and port. Or you can use mcpo commands again to connect if there's not an easy way to 
 
