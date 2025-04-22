@@ -91,5 +91,8 @@ else
   echo "Skipping mcpo install for ${MCP_SERVER_TYPE container"
 fi
 
+# Run mcp-shield utility and redirect the output to the log file
+npx mcp-shield >> "mcp-shield.log" 2>&1
+echo "mcp-shield utility ran, see log for more info"
 
 echo "Startup complete."
