@@ -44,9 +44,6 @@ RUN set -x \
     && pip3 install uv \
     && echo "Pip and uv installation completed" \
     && echo "NPM Global packages installation begins..." \
-    
-# Copy startup.sh into the container
-# COPY startup.sh /app/startup.sh
 
 # Debugging step - list contents of /app to verify file exists
 RUN ls -l /app
