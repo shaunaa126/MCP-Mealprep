@@ -79,6 +79,10 @@ else
   echo "Skipping mcpo install for ${MCP_SERVER_TYPE container"
 fi 
 
+## Scanning security with mcp-shield
+95. npx mcp-shield >> "mcp-shield.log" 2>&1  runs the mcp security scanner [mcp-shield](https://github.com/riseandignite/mcp-shield) and appends to the logfile
+echo "mcp-shield utility ran, see log for more info"
+
 echo "Startup complete.": Prints a message indicating that the startup process is complete.
 
 This detailed walkthrough should help you understand each step of the script's execution. Enjoy!
