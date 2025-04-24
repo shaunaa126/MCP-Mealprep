@@ -8,8 +8,6 @@ Completely rebuilt thanks to [supergateway](https://github.com/supercorp-ai/supe
 
 The docker-compose can be considered example servers; add as many as you need from public repos following this syntax. Each custom GHCR container runs both the MCP server for local STDIO/STOUT and also exposes these servers safely on SSE protocol and optionally as an OpenAPI-compatible HTTP server for OpenWebUI. Either connect to local resources or route through a proxy like nginx, Traefik, Caddy, etc. Once exposed, you can connect to external services like OpenWebUI, n8n, Flowise, Claude, Cursor, etc.
 
-If you only want to run locally/interally, do not add "
-
 The GHCR container is based on debian, and should work with uv, npx, and pip installs. You should also be able to install docker mcp servers the old method, if needed. See "Depreciated Docker Process" below for more information.
 
 ### mcpo Installation
