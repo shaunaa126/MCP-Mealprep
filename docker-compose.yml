@@ -80,7 +80,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=calculator
-      - MCP_PORT=8086
+      - MCP_PORT=8085
       - MCP_COMMAND_TYPE=uvx
       - MCP_PACKAGE=mcp-server-calculator
     command: ["/app/startup.sh"]
@@ -95,7 +95,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=memory
-      - MCP_PORT=8082
+      - MCP_PORT=8086
     command: ["/app/startup.sh"]
 
   # Server: puppeteer
@@ -108,7 +108,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=puppeteer
-      - MCP_PORT=8083
+      - MCP_PORT=8087
     command: ["/app/startup.sh"]
 
   # Server: searxng
@@ -121,7 +121,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=searxng
-      - MCP_PORT=8085
+      - MCP_PORT=8088
       - SEARXNG_URL=http://localhost:8080
     command: ["/app/startup.sh"]
 
@@ -135,7 +135,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=slack
-      - MCP_PORT=8087
+      - MCP_PORT=8089
       - SLACK_BOT_TOKEN={SlackTokenHere}
       - SLACK_TEAM_ID={SlackTeamIDHere}
     command: ["/app/startup.sh"]
@@ -164,7 +164,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=gmaps
-      - MCP_PORT=8093
+      - MCP_PORT=8091
       - GOOGLE_MAPS_API_KEY={GoogleMapsAPIKeyHere}
     command: ["/app/startup.sh"]
 
@@ -178,7 +178,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=brave-search
-      - MCP_PORT=8094
+      - MCP_PORT=8092
       - BRAVE_API_KEY={BraveAPIKeyHere}
     command: ["/app/startup.sh"]
 
@@ -192,7 +192,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=aws-kb-retrieval
-      - MCP_PORT=8095
+      - MCP_PORT=8093
     command: ["/app/startup.sh"]
 
   # Server: docker
@@ -205,7 +205,7 @@ services:
       - mcp_network
     environment:
       - MCP_SERVER_TYPE=docker
-      - MCP_PORT=8096
+      - MCP_PORT=8094
     command: ["/app/startup.sh"]
 
 networks:
