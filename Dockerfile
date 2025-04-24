@@ -46,7 +46,7 @@ RUN set -x \
     && echo "Pip and uv installation completed" \
     && echo "NPM Global packages installation begins..." \
     && npm install -g c7-mcp-server \
-    $$ echo "Context7 server installed locally"
+    && echo "Context7 server installed locally"
 
 # Debugging step - list contents of /app to verify file exists
 RUN ls -l /app
