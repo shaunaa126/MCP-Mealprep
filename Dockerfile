@@ -102,6 +102,11 @@ RUN set -x \
     && npm install -g c7-mcp-server \
     && echo "Context7 server installed locally"
 
+# Install MCP Toolbox for Databases
+RUN export OS="linux/amd64" \
+  && curl -O https://storage.googleapis.com/genai-toolbox/v0.13.0/$OS/toolbox \
+  && chmod +x toolbox
+
 # Debugging step - list contents of /app to verify file exists
 RUN ls -l /app
 
