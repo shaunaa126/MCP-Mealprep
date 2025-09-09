@@ -80,7 +80,7 @@ echo "Launching Supergateway (Port: $MCP_PORT)"
 npx -y supergateway \
     --stdio "$SERVER_CMD ${MCP_ARGS}" \
     --port "$MCP_PORT" --baseUrl http://localhost:"$MCP_PORT" \
-    --ssePath /sse --messagePath /message
+    --ssePath /sse --messagePath /message --healthEndpoint /healthz
 
 # Launch MCPO
 echo "Launching mcpo"
